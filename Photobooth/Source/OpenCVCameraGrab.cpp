@@ -24,7 +24,7 @@ unsigned OpenCVCameraGrab::get_camera_height()
 
 int OpenCVCameraGrab::init()
 {
-	m_video_capture = cv::VideoCapture(0); // open the default camera
+	m_video_capture = cv::VideoCapture(1); // open the default camera
 	if (!m_video_capture.isOpened())  // check if we succeeded
 		return -1;
 
