@@ -2,6 +2,8 @@
     CONSOLE APPLICATION : Photobooth Project Overview
 ========================================================================
 
+Externals for Visual Studio 2017 are available here: https://1drv.ms/u/s!AmRYgZHsh0kooY5xJQI8YAEqzUtaVg
+
 AppWizard has created this Photobooth application for you.
 
 This file contains a summary of what you will find in each of the files that
