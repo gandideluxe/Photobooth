@@ -87,6 +87,12 @@ int Photobooth::init()
 }
 
 int Photobooth::render_image() {
+	//Update Image + Rendering
+	m_camera_grabber.grab_image();
+	auto data = m_camera_grabber.get_image_data();
+	updateTexture2D(m_image_texture, m_camera_grabber.get_camera_width(), m_camera_grabber.get_camera_height(), (char*)data.data());
+	
+
 	const float ortho_projection[4][4] =
 	{
 		{ 2.0f, 0.0f, 0.0f, 0.0f },
@@ -145,15 +151,19 @@ int Photobooth::start()
 		if (m_current_view == ViewDefinitions::PhotoboothViewId) {
 			m_current_view = std::static_pointer_cast<FotoboothView>(view_container[PhotoboothViewId])->drawView();
 			
-			m_camera_grabber.grab_image();
-			auto data = m_camera_grabber.get_image_data();
-			glViewport(200, 0, display_w, display_h);
-			updateTexture2D(m_image_texture, m_camera_grabber.get_camera_width(), m_camera_grabber.get_camera_height(), (char*)data.data());
+
+			//glViewport(200, 0, display_w, display_h);
 		}
 		//if (current_view->get_id() == 2) {
 		//	current_view = settings_view;
 		//	((SettingsView*)current_view)->drawView();
 		//}
+		
+		if (m_current_view == ViewDefinitions::PhotoboothClose) {
+			glfwSetWindowShouldClose(m_window, true);
+		}
+		
+
 		
 		m_imgui_control.endFrame();
 		render_image();
@@ -165,6 +175,7 @@ int Photobooth::start()
 
 	}
 
+	m_imgui_control.cleanup();
 	// Cleanup
 	glfwDestroyWindow(m_window);
 	glfwTerminate();

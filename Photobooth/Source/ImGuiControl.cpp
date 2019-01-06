@@ -8,6 +8,16 @@ int ImGuiControl::init(GLFWwindow* window, const char* glsl_version) {
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
+	ImGuiStyle * style = &ImGui::GetStyle();
+	style->WindowBorderSize = 0.0f;
+
+	ImGuiIO& io = ImGui::GetIO();
+	
+	//io.Fonts->AddFontFromFileTTF((".\\Fonts\\Ruda\\Ruda-Bold.ttf"), 10);
+	//io.Fonts->AddFontFromFileTTF((".\\Fonts\\Ruda\\Ruda-Bold.ttf"), 12);
+	//io.Fonts->AddFontFromFileTTF((".\\Fonts\\Ruda\\Ruda-Bold.ttf"), 14);
+	io.Fonts->AddFontFromFileTTF((".\\Fonts\\Ruda\\Ruda-Bold.ttf"), 32);
+
 	return 0;
 }
 
