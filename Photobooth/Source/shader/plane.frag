@@ -14,5 +14,5 @@ void main()
     //FragColor = vec4(fTexCoord, 0.0, 1.0);\n\
     //FragColor = vec4(fTexCoord , 0.0, 1.0);
     //FragColor = vec4(1.0, 1.0, 0.0, 1.0);
-    FragColor= texture(image_texture, fTexCoord);
+    FragColor= texture(image_texture, vec2(1.0 - fTexCoord.x, fTexCoord.y));
 }
