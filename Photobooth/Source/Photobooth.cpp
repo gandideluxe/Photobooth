@@ -61,7 +61,7 @@ int Photobooth::init()
 	m_camera_grabber.grab_image();
 	auto image_data = m_camera_grabber.get_image_data();
 	glActiveTexture(GL_TEXTURE1);
-	m_image_texture = createTexture2D(m_camera_grabber.get_camera_width(), m_camera_grabber.get_camera_height(), (char*)image_data.data());
+	m_image_texture = createTexture2D(m_camera_grabber.get_camera_settings().video_width, m_camera_grabber.get_camera_settings().video_height, (char*)image_data.data());
 
 	GLuint newProgram(0);
 	try {
@@ -90,7 +90,7 @@ int Photobooth::render_image() {
 	//Update Image + Rendering
 	m_camera_grabber.grab_image();
 	auto data = m_camera_grabber.get_image_data();
-	updateTexture2D(m_image_texture, m_camera_grabber.get_camera_width(), m_camera_grabber.get_camera_height(), (char*)data.data());
+	updateTexture2D(m_image_texture, m_camera_grabber.get_camera_settings().video_width, m_camera_grabber.get_camera_settings().video_height, (char*)data.data());
 	
 
 	const float ortho_projection[4][4] =
@@ -146,7 +146,7 @@ int Photobooth::start()
 			m_current_view = std::static_pointer_cast<StartView>(view_container[StartViewId])->drawView();
 		}
 		if (m_current_view == ViewDefinitions::SettingsViewId) {		
-			m_current_view = std::static_pointer_cast<SettingsView>(view_container[SettingsViewId])->drawView();
+			m_current_view = std::static_pointer_cast<SettingsView>(view_container[SettingsViewId])->drawView(m_camera_grabber.get_camera_settings());
 		}
 		if (m_current_view == ViewDefinitions::PhotoboothViewId) {
 			m_current_view = std::static_pointer_cast<FotoboothView>(view_container[PhotoboothViewId])->drawView();

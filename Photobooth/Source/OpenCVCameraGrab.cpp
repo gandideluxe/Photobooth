@@ -12,14 +12,30 @@ OpenCVCameraGrab::~OpenCVCameraGrab()
 
 }
 
-unsigned OpenCVCameraGrab::get_camera_width()
+void OpenCVCameraGrab::update_camera_settings()
 {
-	return m_video_width;
+	m_camera_settings.video_width = (unsigned)m_video_capture.get(cv::CAP_PROP_FRAME_WIDTH);
+	m_camera_settings.video_height = (unsigned)m_video_capture.get(cv::CAP_PROP_FRAME_HEIGHT);
+	m_camera_settings.video_fps = m_video_capture.get(cv::CAP_PROP_FPS);
+
+	int codec = m_video_capture.get(cv::CAP_PROP_FOURCC);
+	for (int i = 0; i != 4; ++i) {
+		m_camera_settings.video_format[i] = ((unsigned char*)&codec)[i];
+	}
 }
 
-unsigned OpenCVCameraGrab::get_camera_height()
+void OpenCVCameraGrab::set_camera_settings(CameraSettings settings)
 {
-	return m_video_height;
+	m_video_capture.set(cv::CAP_PROP_FRAME_WIDTH, settings.video_width);
+	m_video_capture.set(cv::CAP_PROP_FRAME_HEIGHT, settings.video_height);
+	m_video_capture.set(cv::CAP_PROP_FPS, settings.video_fps);
+	int codec = cv::VideoWriter::fourcc(settings.video_format[0], settings.video_format[1], settings.video_format[2], settings.video_format[3]);
+	m_video_capture.set(cv::CAP_PROP_FOURCC, codec);	
+}
+
+CameraSettings OpenCVCameraGrab::get_camera_settings()
+{
+	return m_camera_settings;
 }
 
 int OpenCVCameraGrab::init()
@@ -30,53 +46,23 @@ int OpenCVCameraGrab::init()
 		std::cerr << "Error openening Camera" << std::endl;
 		std::cerr << "Generating Empty Image" << std::endl;
 
-		m_video_width = 1024u;
-		m_video_height = 720u;
-		m_video_fps = 0.0;
-		m_format = 0.0;
+		m_camera_settings.video_width = 1024u;
+		m_camera_settings.video_height = 720u;
+		m_camera_settings.video_fps = 0.0;
 
-		m_frame_data.resize(m_video_width * m_video_height * 3);
+		m_frame_data.resize(m_camera_settings.video_width * m_camera_settings.video_height * 3);
 		
 		memset(m_frame_data.data(), 0xFF, m_frame_data.size() / 2);
 
 		return -1;
 	}
 	else {
-		int codec = cv::VideoWriter::fourcc('M', 'J', 'P', 'G');
-		m_video_capture.set(cv::CAP_PROP_FOURCC, codec);
+		//int codec = cv::VideoWriter::fourcc('Y', 'U', 'Y', '2');
+		//m_video_capture.set(cv::CAP_PROP_FOURCC, codec);
 
-		double grabMode, frameFormat, settings;
+		update_camera_settings();
 
-		// Backed-specific value indicating the current capture mode.
-		grabMode = m_video_capture.get(cv::CAP_PROP_MODE);
-		// Format of the Mat objects returned by retrieve()
-		frameFormat = m_video_capture.get(cv::CAP_PROP_FORMAT);
-		// Some available settings 
-		settings = m_video_capture.get(cv::CAP_PROP_SETTINGS);
-		
-#if 0
-		// Playing around GRAB_MODE
-		// Boolean flags indicating whether images should be converted to RGB.
-		m_video_capture.set(cv::CAP_PROP_CONVERT_RGB, 0);
-		int i = -100;
-		while (ok == false && i < 10)
-		{
-			if (i != 0)
-				ok = m_video_capture.set(cv::CAP_PROP_MODE, grabMode + i);
-			i++;
-		}
-		if (ok)
-		{
-			grabMode = m_video_capture.get(cv::CAP_PROP_MODE);
-			std::cout << "Grab Mode=" << grabMode << " is supported" << std::endl;
-		}
-#endif
-		m_video_width = (unsigned)m_video_capture.get(cv::CAP_PROP_FRAME_WIDTH);
-		m_video_height = (unsigned)m_video_capture.get(cv::CAP_PROP_FRAME_HEIGHT);
-		m_video_fps = m_video_capture.get(cv::CAP_PROP_FPS);
-		m_format = m_video_capture.get(cv::CAP_PROP_FORMAT);
-
-		m_frame_data.resize(m_video_width * m_video_height * 3);
+		m_frame_data.resize(m_camera_settings.video_width * m_camera_settings.video_height * 3);
 	}
 	return 0;
 }
@@ -86,9 +72,10 @@ void OpenCVCameraGrab::grab_image()
 	if (m_video_capture.isOpened()){
 		cv::Mat cap;	
 		//m_video_capture >> cap; // get a new frame from camera
-		m_video_capture.read(cap);
+		bool success = m_video_capture.read(cap);
 		//cv::cvtColor(cap, cap, cv::COLOR_BGR2RGBA);
-		memcpy(m_frame_data.data(), (unsigned char*)(cap.data), m_frame_data.size());
+		if(success)
+			memcpy(m_frame_data.data(), (unsigned char*)(cap.data), m_frame_data.size());
 #if 0
 		std::ofstream file("image.raw", std::ios::out | std::ios::binary);
 		file.write((char*)m_frame_data.data(), m_frame_data.size());

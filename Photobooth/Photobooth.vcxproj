@@ -148,7 +148,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraSettings.h" />
+    <ClInclude Include="Source\CameraSettings.h" />
     <ClInclude Include="Source\GL\gl3w.h" />
     <ClInclude Include="Source\GL\glcorearb.h" />
     <ClInclude Include="Source\ImGuiControl.h" />
@@ -175,7 +175,7 @@
     <ClInclude Include="Source\Views\StartView.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CameraSettings.cpp" />
+    <ClCompile Include="Source\CameraSettings.cpp" />
     <ClCompile Include="Source\GL\gl3w.c" />
     <ClCompile Include="Source\ImGuiControl.cpp" />
     <ClCompile Include="Source\imgui\imgui.cpp" />

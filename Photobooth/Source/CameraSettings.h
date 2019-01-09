@@ -5,8 +5,9 @@ public:
 	CameraSettings();
 	~CameraSettings();
 
-	double fps = 0.0;
-	unsigned width = 0u;
-	unsigned height = 0u;
+	double			video_fps = 0.0;
+	unsigned		video_width = 0u;
+	unsigned		video_height = 0u;
+	unsigned char	video_format[4];
 };
 
