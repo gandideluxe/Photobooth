@@ -23,7 +23,7 @@
     <ProjectGuid>{0ADFEEF2-686E-46AF-A4A2-6879159051E1}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Photobooth</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -148,6 +148,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraSettings.h" />
     <ClInclude Include="Source\GL\gl3w.h" />
     <ClInclude Include="Source\GL\glcorearb.h" />
     <ClInclude Include="Source\ImGuiControl.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Source\Views\StartView.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraSettings.cpp" />
     <ClCompile Include="Source\GL\gl3w.c" />
     <ClCompile Include="Source\ImGuiControl.cpp" />
     <ClCompile Include="Source\imgui\imgui.cpp" />

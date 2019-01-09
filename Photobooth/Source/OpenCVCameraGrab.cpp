@@ -24,9 +24,9 @@ unsigned OpenCVCameraGrab::get_camera_height()
 
 int OpenCVCameraGrab::init()
 {
-	m_video_capture = cv::VideoCapture(0); // open the default camera
+	m_video_capture = cv::VideoCapture(1); // open the default camera
 	if (!m_video_capture.isOpened())  // check if we succeeded
-	{
+	{		
 		std::cerr << "Error openening Camera" << std::endl;
 		std::cerr << "Generating Empty Image" << std::endl;
 
@@ -35,13 +35,16 @@ int OpenCVCameraGrab::init()
 		m_video_fps = 0.0;
 		m_format = 0.0;
 
-		m_frame_data.resize(m_video_width * m_video_height * 4);
+		m_frame_data.resize(m_video_width * m_video_height * 3);
 		
 		memset(m_frame_data.data(), 0xFF, m_frame_data.size() / 2);
 
 		return -1;
 	}
 	else {
+		int codec = cv::VideoWriter::fourcc('M', 'J', 'P', 'G');
+		m_video_capture.set(cv::CAP_PROP_FOURCC, codec);
+
 		double grabMode, frameFormat, settings;
 
 		// Backed-specific value indicating the current capture mode.
@@ -73,7 +76,7 @@ int OpenCVCameraGrab::init()
 		m_video_fps = m_video_capture.get(cv::CAP_PROP_FPS);
 		m_format = m_video_capture.get(cv::CAP_PROP_FORMAT);
 
-		m_frame_data.resize(m_video_width * m_video_height * 4);
+		m_frame_data.resize(m_video_width * m_video_height * 3);
 	}
 	return 0;
 }
@@ -84,7 +87,7 @@ void OpenCVCameraGrab::grab_image()
 		cv::Mat cap;	
 		//m_video_capture >> cap; // get a new frame from camera
 		m_video_capture.read(cap);
-		cv::cvtColor(cap, cap, cv::COLOR_BGR2RGBA);
+		//cv::cvtColor(cap, cap, cv::COLOR_BGR2RGBA);
 		memcpy(m_frame_data.data(), (unsigned char*)(cap.data), m_frame_data.size());
 #if 0
 		std::ofstream file("image.raw", std::ios::out | std::ios::binary);
