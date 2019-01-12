@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -101,7 +101,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./lib/OpenCV/;./Source/;./Source/imgui/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Source/Camera;./lib/OpenCV/;./Source/;./Source/imgui/;./lib/VideoInput/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,7 +134,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./lib/OpenCV/;./Source/;./Source/imgui/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Source/Camera;./lib/OpenCV/;./Source/;./Source/imgui/;./lib/VideoInput/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,7 +148,20 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\VideoInput\Common.h" />
+    <ClInclude Include="lib\VideoInput\DebugPrintOut.h" />
+    <ClInclude Include="lib\VideoInput\FormatReader.h" />
+    <ClInclude Include="lib\VideoInput\ImageGrabber.h" />
+    <ClInclude Include="lib\VideoInput\ImageGrabberThread.h" />
+    <ClInclude Include="lib\VideoInput\Media_Foundation.h" />
+    <ClInclude Include="lib\VideoInput\RawImage.h" />
+    <ClInclude Include="lib\VideoInput\videoDevice.h" />
+    <ClInclude Include="lib\VideoInput\videoDevices.h" />
+    <ClInclude Include="lib\VideoInput\videoInput.h" />
     <ClInclude Include="Source\CameraSettings.h" />
+    <ClInclude Include="Source\Camera\BaseCameraGrab.h" />
+    <ClInclude Include="Source\Camera\MediaFoundationCameraGrab.h" />
+    <ClInclude Include="Source\Camera\OpenCVCameraGrab.h" />
     <ClInclude Include="Source\GL\gl3w.h" />
     <ClInclude Include="Source\GL\glcorearb.h" />
     <ClInclude Include="Source\ImGuiControl.h" />
@@ -161,7 +174,6 @@
     <ClInclude Include="Source\imgui\imstb_textedit.h" />
     <ClInclude Include="Source\imgui\imstb_truetype.h" />
     <ClInclude Include="Source\main.h" />
-    <ClInclude Include="Source\OpenCVCameraGrab.h" />
     <ClInclude Include="Source\Photobooth.h" />
     <ClInclude Include="Source\plane.hpp" />
     <ClInclude Include="Source\stdafx.h" />
@@ -175,7 +187,19 @@
     <ClInclude Include="Source\Views\StartView.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="lib\VideoInput\DebugPrintOut.cpp" />
+    <ClCompile Include="lib\VideoInput\FormatReader.cpp" />
+    <ClCompile Include="lib\VideoInput\ImageGrabber.cpp" />
+    <ClCompile Include="lib\VideoInput\ImageGrabberThread.cpp" />
+    <ClCompile Include="lib\VideoInput\Media_Foundation.cpp" />
+    <ClCompile Include="lib\VideoInput\RawImage.cpp" />
+    <ClCompile Include="lib\VideoInput\videoDevice.cpp" />
+    <ClCompile Include="lib\VideoInput\videoDevices.cpp" />
+    <ClCompile Include="lib\VideoInput\videoInput.cpp" />
     <ClCompile Include="Source\CameraSettings.cpp" />
+    <ClCompile Include="Source\Camera\BaseCameraGrab.cpp" />
+    <ClCompile Include="Source\Camera\MediaFoundationCameraGrab.cpp" />
+    <ClCompile Include="Source\Camera\OpenCVCameraGrab.cpp" />
     <ClCompile Include="Source\GL\gl3w.c" />
     <ClCompile Include="Source\ImGuiControl.cpp" />
     <ClCompile Include="Source\imgui\imgui.cpp" />
@@ -185,7 +209,6 @@
     <ClCompile Include="Source\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Source\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\OpenCVCameraGrab.cpp" />
     <ClCompile Include="Source\Photobooth.cpp" />
     <ClCompile Include="Source\plane.cpp" />
     <ClCompile Include="Source\stdafx.cpp" />

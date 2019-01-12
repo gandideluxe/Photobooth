@@ -25,6 +25,12 @@
     <Filter Include="shader">
       <UniqueIdentifier>{35553306-5810-4280-86bf-181a4d7d3c86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="VideoInput">
+      <UniqueIdentifier>{860107f2-39ee-4e30-a7b1-da2ca12ca0da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{ccb68ffc-0a28-45ba-ab81-077ae85bb1d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -93,17 +99,53 @@
     <ClInclude Include="Source\ViewDefinitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\OpenCVCameraGrab.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\plane.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lib\VideoInput\Common.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VideoInput\DebugPrintOut.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VideoInput\FormatReader.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VideoInput\ImageGrabber.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VideoInput\ImageGrabberThread.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VideoInput\Media_Foundation.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VideoInput\RawImage.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VideoInput\videoDevice.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VideoInput\videoDevices.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VideoInput\videoInput.h">
+      <Filter>VideoInput</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\MediaFoundationCameraGrab.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\OpenCVCameraGrab.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\BaseCameraGrab.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
     <ClInclude Include="Source\CameraSettings.h">
-      <Filter>Header Files</Filter>
+      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,17 +197,50 @@
     <ClCompile Include="Source\Views\StartView.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Source\OpenCVCameraGrab.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\VideoInput\DebugPrintOut.cpp">
+      <Filter>VideoInput</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\VideoInput\FormatReader.cpp">
+      <Filter>VideoInput</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\VideoInput\ImageGrabber.cpp">
+      <Filter>VideoInput</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\VideoInput\ImageGrabberThread.cpp">
+      <Filter>VideoInput</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\VideoInput\Media_Foundation.cpp">
+      <Filter>VideoInput</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\VideoInput\RawImage.cpp">
+      <Filter>VideoInput</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\VideoInput\videoDevice.cpp">
+      <Filter>VideoInput</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\VideoInput\videoDevices.cpp">
+      <Filter>VideoInput</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\VideoInput\videoInput.cpp">
+      <Filter>VideoInput</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\OpenCVCameraGrab.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\BaseCameraGrab.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\MediaFoundationCameraGrab.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
     <ClCompile Include="Source\CameraSettings.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

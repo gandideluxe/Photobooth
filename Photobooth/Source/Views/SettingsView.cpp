@@ -39,7 +39,6 @@ ViewDefinitions SettingsView::drawView()
 		const char* items_res[] = { "800x600", "1920x1080", "60Hz" };
 		static int item_res_current = 0;
 		ImGui::Combo("Resolution", &item_res_current, items_fps, IM_ARRAYSIZE(items_res));
-		
 	}
 
 	ImGui::End();

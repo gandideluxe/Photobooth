@@ -16,6 +16,7 @@
 #include <Views\SettingsView.h>
 
 #include <OpenCVCameraGrab.h>
+#include <MediaFoundationCameraGrab.h>
 
 #include <plane.hpp>
 
@@ -37,7 +38,8 @@ private:
 	std::vector<std::shared_ptr<BaseView>> view_container;
 	ViewDefinitions m_current_view = ViewDefinitions::StartViewId;
 
-	OpenCVCameraGrab m_camera_grabber;
+    //OpenCVCameraGrab m_camera_grabber;
+    MediaFoundationCameraGrab m_camera_grabber;
 	
 	std::shared_ptr<Plane> m_plane = nullptr;
 	GLuint m_image_texture = 0;

@@ -88,6 +88,7 @@ int Photobooth::init()
 
 int Photobooth::render_image() {
 	//Update Image + Rendering
+    m_camera_grabber.apply_camera_settings();
 	m_camera_grabber.grab_image();
 	auto data = m_camera_grabber.get_image_data();
 	updateTexture2D(m_image_texture, m_camera_grabber.get_camera_settings().video_width, m_camera_grabber.get_camera_settings().video_height, (char*)data.data());
