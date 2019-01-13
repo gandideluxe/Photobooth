@@ -11,10 +11,13 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/norm.hpp>
 
+#include <ctime>
+
 Photobooth::Photobooth()
 {
+    last_time = clock();
+    time_stamps.resize(90, 0.0f);
 }
-
 
 Photobooth::~Photobooth()
 {
@@ -33,9 +36,9 @@ int Photobooth::init()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
-
+        
 	// Create window with graphics context
-	m_window = glfwCreateWindow(1280, 720, "Photobooth", NULL, NULL);
+	m_window = glfwCreateWindow(1920, 1080, "Photobooth", NULL, NULL);
 	if (m_window == NULL)
 		return 1;
 	glfwMakeContextCurrent(m_window);
@@ -82,6 +85,7 @@ int Photobooth::init()
 	}
 
 	m_plane = std::shared_ptr<Plane>(new Plane());
+    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 
 	return 0;
 }
@@ -93,7 +97,6 @@ int Photobooth::render_image() {
 	auto data = m_camera_grabber.get_image_data();
 	updateTexture2D(m_image_texture, m_camera_grabber.get_camera_settings().video_width, m_camera_grabber.get_camera_settings().video_height, (char*)data.data());
 	
-
 	const float ortho_projection[4][4] =
 	{
 		{ 2.0f, 0.0f, 0.0f, 0.0f },
@@ -102,9 +105,7 @@ int Photobooth::render_image() {
 		{ -1.0f, 1.0f, 0.0f, 1.0f },
 	};
 	glm::mat4 view = glm::mat4(1.0);
-
-	//glViewport(tf_pos.x, tf_pos.y, (int)tf_size.x, (int)tf_size.y);
-
+    
 	glUseProgram(m_fotobooth_program);
 	glUniformMatrix4fv(glGetUniformLocation(m_fotobooth_program, "Projection"), 1, GL_FALSE,
 		//glm::value_ptr(projection));
@@ -138,33 +139,28 @@ int Photobooth::start()
 		glfwMakeContextCurrent(m_window);
 		glfwGetFramebufferSize(m_window, &display_w, &display_h);
 		glViewport(0, 0, display_w, display_h);
-		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
+        update_fps();
+
 		m_imgui_control.startFrame();
 				
 		if (m_current_view == ViewDefinitions::StartViewId) {
 			m_current_view = std::static_pointer_cast<StartView>(view_container[StartViewId])->drawView();
 		}
-		if (m_current_view == ViewDefinitions::SettingsViewId) {		
-			m_current_view = std::static_pointer_cast<SettingsView>(view_container[SettingsViewId])->drawView(m_camera_grabber.get_camera_settings());
+		if (m_current_view == ViewDefinitions::SettingsViewId) {
+            auto camera_settings = m_camera_grabber.get_camera_settings();
+			m_current_view = std::static_pointer_cast<SettingsView>(view_container[SettingsViewId])->drawView(camera_settings);
+            m_camera_grabber.set_camera_settings(camera_settings);
+            m_camera_grabber.apply_camera_settings();
+            std::static_pointer_cast<SettingsView>(view_container[SettingsViewId])->renderFPS(time_stamps, frame);
 		}
 		if (m_current_view == ViewDefinitions::PhotoboothViewId) {
 			m_current_view = std::static_pointer_cast<FotoboothView>(view_container[PhotoboothViewId])->drawView();
-			
-
-			//glViewport(200, 0, display_w, display_h);
 		}
-		//if (current_view->get_id() == 2) {
-		//	current_view = settings_view;
-		//	((SettingsView*)current_view)->drawView();
-		//}
 		
 		if (m_current_view == ViewDefinitions::PhotoboothClose) {
 			glfwSetWindowShouldClose(m_window, true);
 		}
-		
-
 		
 		m_imgui_control.endFrame();
 		render_image();
@@ -173,7 +169,6 @@ int Photobooth::start()
 
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
-
 	}
 
 	m_imgui_control.cleanup();
@@ -181,4 +176,14 @@ int Photobooth::start()
 	glfwDestroyWindow(m_window);
 	glfwTerminate();
 	return 0;
+}
+
+void Photobooth::update_fps()
+{
+    clock_t end = clock();
+    double elapsed_secs = double(end - last_time) / CLOCKS_PER_SEC * 1000.0;
+    last_time = end;
+
+    time_stamps[frame % time_stamps.size()] = elapsed_secs;
+    ++frame;
 }

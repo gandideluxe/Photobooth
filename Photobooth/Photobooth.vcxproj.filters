@@ -31,6 +31,9 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{ccb68ffc-0a28-45ba-ab81-077ae85bb1d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Printer">
+      <UniqueIdentifier>{f777c057-9d72-4b9f-b584-0855ee4f7a67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -147,6 +150,9 @@
     <ClInclude Include="Source\CameraSettings.h">
       <Filter>Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Printer\Printer.h">
+      <Filter>Printer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\stdafx.cpp">
@@ -241,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="Source\CameraSettings.cpp">
       <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Printer\Printer.cpp">
+      <Filter>Printer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

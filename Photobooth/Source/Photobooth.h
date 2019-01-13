@@ -32,6 +32,8 @@ public:
 
 private:
 
+    void update_fps();
+    
 	GLFWwindow* m_window;
 	ImGuiControl m_imgui_control;
 
@@ -48,6 +50,10 @@ private:
 	std::string m_fragment_shader = ".//Source//shader//plane.frag";
 	GLuint m_fotobooth_program = 0;
 	std::string m_error_message = "";
+
+    std::vector<float> time_stamps;
+    clock_t last_time = 0.0;
+    size_t frame = 0;
 
 	static void glfw_error_callback(int error, const char* description)
 	{
